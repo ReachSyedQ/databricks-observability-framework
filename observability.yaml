@@ -1,0 +1,50 @@
+logging:
+  level: INFO
+  file: app.log
+  max_bytes: 1048576
+  backup_count: 3
+
+service:
+  name: greeting_app
+  environment: dev
+  version: 1.0.0
+
+telemetry:
+  enabled: true
+  dataset: greeting_app
+
+sampling:
+  logs:
+    enabled: false
+    rate: 1.0
+    exclude_event_types:
+      - metrics
+      - metrics_export
+    adaptive:
+      enabled: false
+      error_rate_threshold: 0.1
+      latency_p95_threshold_ms: 250
+      elevated_rate: 1.0
+    per_function: {}
+  metrics:
+    enabled: false
+    rate: 1.0
+    adaptive:
+      enabled: false
+      error_rate_threshold: 0.1
+      latency_p95_threshold_ms: 250
+      elevated_rate: 1.0
+    per_function: {}
+
+exporters:
+  prometheus:
+    enabled: false
+    gateway_url:
+    job: greeting_app
+    timeout_seconds: 5
+    headers: {}
+  azure_monitor:
+    enabled: false
+    endpoint:
+    timeout_seconds: 5
+    headers: {}
